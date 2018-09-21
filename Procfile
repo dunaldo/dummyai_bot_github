@@ -1,0 +1,1 @@
+web: python dummyai_bot.py
