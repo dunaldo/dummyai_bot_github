@@ -2,7 +2,6 @@
 import urllib.request
 from urllib.parse import urlencode
 import json
-from datetime import datetime
 from tokenweather import weatherToken
 
 # Openweathermap Weather codes and corressponding emojis
@@ -66,8 +65,6 @@ def send_back_to_user(weather_response):
     if weather_response.get('cod') is 200:
         city_name = weather_response.get("name")
         country_name = weather_response.get("sys").get("country")
-        sunrise = datetime.fromtimestamp(weather_response.get("sys").get("sunrise")).strftime('%H:%M')
-        sunset = datetime.fromtimestamp(weather_response.get("sys").get("sunset")).strftime('%H:%M')
         city_temperature = str(int(weather_response.get("main").get("temp")))
         city_humidity = str(weather_response.get("main").get("humidity"))
         city_wind = str(weather_response.get("wind").get("speed"))
@@ -79,8 +76,6 @@ def send_back_to_user(weather_response):
         city_emoji = get_emoji(weather_response.get("weather")[0].get("id"))
         sendback = ('''Weather in {},{}:
 Cloudiness {} {}{}
-Sunrise in {}
-Sunset in {}
 Humidity {}%
 Wind {} {}m/s
 Wind direction - {}''').format(city_name,
@@ -88,8 +83,6 @@ Wind direction - {}''').format(city_name,
                                city_emoji,
                                city_temperature,
                                degree_sign,
-                               sunrise,
-                               sunset,
                                city_humidity,
                                thunderstorm,
                                city_wind,
